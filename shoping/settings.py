@@ -15,9 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR1=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-Template_dir=os.path.join(BASE_DIR1,'templates')
-Static_dir=os.path.join(BASE_DIR1,'static')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -59,7 +57,7 @@ ROOT_URLCONF = 'shoping.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ Template_dir],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,9 +122,7 @@ STATIC_URL = 'static/'
 
 MEDIA_URL='uploads/'
 
-STATICFILES_DIRS=[
-    Static_dir
-]
+STATICFILES_DIRS=[ BASE_DIR / 'static' ]
 
 MEDIA_ROOT=BASE_DIR / 'static'
 

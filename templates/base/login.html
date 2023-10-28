@@ -1,8 +1,16 @@
 {% extends 'base/main.html' %}
 {% block content %}
+<style>
+    @media screen and (max-width:600px) {
+        .siva{
+            width: 300px;
+           
+        }
+    }
+</style>
 <form action="" method="POST" >
     {% csrf_token %}
-    <div class="row d-flex justify-content-center col-md-4" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,-40%);">
+    <div class="row d-flex justify-content-center col-md-4 siva" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,-40%);">
         <div class="">
         <div class="card bg-secondary">
             <div class="card-header text-center">Login</div>

@@ -1,0 +1,33 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<form action="" method="POST" >
+    {% csrf_token %}
+    <div class="row d-flex justify-content-center col-md-4" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,-40%);">
+        <div class="">
+        <div class="card bg-secondary">
+            <div class="card-header text-center">Login</div>
+            
+            <div class="card-body">
+                <label for="" class="form-label">Username</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-info"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <label for="" class="form-label">Password</label>
+                <div class="input-group my-2">
+                    <input type="password" class="form-control" name="password">
+                    <span class="input-group-text bg-info"><i class="bi bi-key"></i></span>
+                </div>
+                <div class="d-grid my-3">
+                <button class="btn btn-primary text-center">Login</button>
+                </div>
+                <div class="my-2 text-center">
+                <p>Don't have an account</p>
+                <a class="text-warning" href="{% url 'register' %}">Signin</a>
+                </div>
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base/main.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+    <div class="offset-md-9 col-md-3 d-flex my-2 justify-content-end" style="border: 2px solid rgb(0, 119, 255);border-radius: 15px;">
+        <input type="text" class="form-control text-primary px-3" name="q" placeholder="Search product" style="border: none; border-radius: 15px 0 0 15px;font-size: 18px;padding-bottom: 5px;">
+        <button class="btn btn-primary" style="border: none;border-radius: 0 15px 15px 0;"><i class="bi bi-search"> </i></button>
+    </div>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable d-flex justify-content-between">
+            
+            {{message}}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if searchprod %}
+        <div class="row row-cols-1 row-cols-md-3">
+            {% for item in searchprod %}
+            
+            <div class="col-lg-3 col-sm-6 my-2">
+                <a href="{% url 'productdes' item.id %}" style="text-decoration: none;">
+                <div class="card my-2 h-100" >
+                    <img src="{{item.product_image.url}}" alt=""class="card-img-top"  style="height: 200px;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{item.name}}</h4>
+                        <div class="card-footer" >
+                            <div class="my-2" style="display: flex; justify-content: space-between; font-size: 20px;">
+                            <span style="color: red;"><s>{{item.original_price | stringformat:'d'}}</s></span>
+                            <span style="color: green;">{{item.selling_price | stringformat:'d'}}</span>
+                            </div>
+                            <div class="d-grid my-2">
+                                <button class="btn btn-success my-1">Buy Now</button>
+                            </div>
+                            </div>
+                        <!-- <span class="badge bg-success">HTML5</span> -->
+                        <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque optio quibusdam modi in ab ipsum dolor ut quas amet unde. Aperiam voluptas maxime reprehenderit asperiores voluptate quas praesentium vel beatae.</p> -->
+                        
+                    </div>
+                </div>
+            </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+    <div class="my-2">
+        <img src="{% static 'online-fashion-shopping-with-laptop.jpg' %}" class="img-fluid" alt="">
+    </div>
+    <h3>Trending Products</h3>
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for item in prod %}
+        
+        <div class="col-lg-3 col-sm-6 my-2">
+            <a href="{% url 'productdes' item.id %}" style="text-decoration: none;">
+            <div class="card my-2 h-100" >
+                <img src="{{item.product_image.url}}" alt=""class="card-img-top"  style="height: 200px;">
+                <div class="card-body">
+                    <h4 class="card-title">{{item.name}}</h4>
+                    <div class="card-footer" >
+                        <div class="my-2" style="display: flex; justify-content: space-between; font-size: 20px;">
+                        <span style="color: red;"><s>{{item.original_price | stringformat:'d'}}</s></span>
+                        <span style="color: green;">{{item.selling_price | stringformat:'d'}}</span>
+                        </div>
+                        <div class="d-grid my-2">
+                            <button class="btn btn-success my-1">Buy Now</button>
+                        </div>
+                        </div>
+                    <!-- <span class="badge bg-success">HTML5</span> -->
+                    <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque optio quibusdam modi in ab ipsum dolor ut quas amet unde. Aperiam voluptas maxime reprehenderit asperiores voluptate quas praesentium vel beatae.</p> -->
+                    
+                </div>
+            </div>
+        </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+
+
+<!-- {% for item in prod %}
+<div class="col-md-4 col-lg-3 float-start">
+    <div class="card my-3 mx-4">
+        <img style="height: 200px; width: 230px;" class="card-image-top align_items-center" src="{{item.product_image.url}}" alt="{{item.name}}">
+        <h5 class="card-title my-2">{{item.name}}</h5>
+        <div class="card-footer d-flex" style="display: flex; justify-content: space-between;">
+        <span style="color: red;"><s>{{item.original_price | stringformat:'d'}}</s></span>
+        <span style="color: green;">{{item.selling_price | stringformat:'d'}}</span>
+        </div>
+    </div>
+</div>
+{% endfor %} -->
+{% endblock %}

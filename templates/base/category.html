@@ -1,0 +1,36 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="container">
+    <ol class="breadcrumb p-2">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Categories</li>
+    </ol> 
+    <h2 class="my-2">Categories</h2>
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for item in cate %}
+        <div class="col-lg-3 col-sm-6 my-2">
+            <a href="{% url 'products' item.id %}" style="text-decoration: none;">
+            <div class="card my-2 h-100" >
+                <img src="{{item.image.url}}" alt=""class="card-img-top"  style="height: 200px;">
+                <div class="card-body">
+                    <h4 class="card-title">{{item.name}}</h4>
+                    <div class="card-footer" >
+                        <div class="my-2" style="display: flex; justify-content: space-between; font-size: 20px;">
+                        <span style="color: red;"><s>{{item.original_price | stringformat:'d'}}</s></span>
+                        <span style="color: green;">{{item.selling_price | stringformat:'d'}}</span>
+                        </div>
+                        <div class="d-grid my-2">
+                            <button class="btn btn-success my-1">Shop Now</button>
+                        </div>
+                        </div>
+                    <!-- <span class="badge bg-success">HTML5</span> -->
+                    <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque optio quibusdam modi in ab ipsum dolor ut quas amet unde. Aperiam voluptas maxime reprehenderit asperiores voluptate quas praesentium vel beatae.</p> -->
+                    
+                </div>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

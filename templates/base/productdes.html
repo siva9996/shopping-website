@@ -1,0 +1,99 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="container text-center">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable d-flex justify-content-between">
+            
+            {{message}}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h1 class="my-2">{{prod.name}} Description</h1>
+    <div class="my-5">
+        <div class="row">
+        <div class="col-md-6 my-auto ">
+        <img class="img-fluid mx-auto d-block my-auto " style="max-width: 50%; height: auto;"  src="{{prod.product_image.url}}" alt="">
+        </div>
+        <div class="col-md-6 my-auto mx-auto">
+            <h5 class="">{{prod.name}}</h5>
+            <p class="card-text">
+                <span style="color: red;font-size: 15px;"><s>{{prod.original_price | stringformat:'d'}}</s></span><br>
+                <span style="color: green; font-size: 20px;">{{prod.selling_price | stringformat:'d'}}</span><br>
+                {{prod.description}}
+            </p>
+            {% if prod.quantity > 0 %}
+            <p class="card-text" style="color: rgb(231, 162, 13); font-size: 20px;" >Available Quantity : {{prod.quantity}}</p>
+            <form action="{% url 'cart' prod.id %}" method="POST">
+                {% csrf_token %}
+            <div class="mx-auto my-3 ps-3">
+            <div class="btn-group">
+                <a id="minus1" class="btn btn-primary">-</a>
+                <input id="addcartval" class="text-center" type="text" name="cartval" value="1" style="width: 75px; outline: none; font-size: 20px;">
+                <a id="plusvalue" class="btn btn-primary">+</a><br>
+            </div>
+            <button class="btn btn-primary ps-3">Add to carts</button><small class="text-muted text-warning">  Maximum Cart Quantity 10</small>
+            </div>
+        </form>
+        <form action="{% url 'buy' prod.id %}" method="POST">
+            {% csrf_token %}
+            <div class="mx-auto ps-3">
+            <div class="btn-group ">
+                <a id="minus2" class="btn btn-success">-</a>
+                <input id="orderval" class="text-center" type="text" name="buyval" value="1" style="width: 75px; outline: none;">
+                <a id="plus2" class="btn btn-success">+</a><br>
+            </div>
+            <button href="#" class="btn btn-success">Buy Product</button><small class="text-muted text-warning">  Maximum Order Quantity 10</small>
+        </div>
+        </form>
+        {% else %}
+        <p class="card-text" style="color: rgb(231, 162, 13); font-size: 20px;" >Out of Stock</p>
+        {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+    let minus1=document.getElementById('minus1')
+    let plus1=document.getElementById('plusvalue')
+    let addcartval=document.getElementById('addcartval')
+    let minus2=document.getElementById('minus2')
+    let plus2=document.getElementById('plus2')
+    let orderval=document.getElementById('orderval')
+    plus1.addEventListener("click",()=>{
+        let qty = parseInt(addcartval.value)
+        qty=isNaN(qty)?1:qty;
+        if(qty<10){
+            qty++;
+            addcartval.value=qty
+        }
+    })
+    minus1.addEventListener("click",()=>{
+        let qty = parseInt(addcartval.value)
+        qty=isNaN(qty)?1:qty;
+        if(qty>1){
+            qty--;
+            addcartval.value=qty
+        }
+    })
+    plus2.addEventListener("click",()=>{
+        let qty = parseInt(orderval.value)
+        qty=isNaN(qty)?1:qty;
+        if(qty<10){
+            qty++;
+            orderval.value=qty
+        }
+    })
+    minus2.addEventListener("click",()=>{
+        let qty = parseInt(orderval.value)
+        qty=isNaN(qty)?1:qty;
+        if(qty>1){
+            qty--;
+            orderval.value=qty
+        }
+    })
+</script>
+{% endblock %}

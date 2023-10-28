@@ -1,0 +1,24 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="" style="position: relative;">
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="row d-flex justify-content-center col-lg-4 col-sm-6" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,10%);">
+        <div class="">
+        <div class="card bg-secondary">
+            <div class="card-header text-center">Login</div>
+            
+            <div class="card-body">
+                <div>
+                    {{form.as_p}}
+                </div>
+                <div class="d-grid my-3">
+                <button class="btn btn-primary text-center">Signin</button>
+                </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+</div>
+{% endblock %}

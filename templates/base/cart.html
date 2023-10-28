@@ -1,0 +1,40 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="container">
+    <ol class="breadcrumb p-2">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Cart</li>
+    </ol> 
+    <h1 class="mt-3">Cart</h1>
+    {% if carts %}
+    {% for cart in carts %}
+    <div class="card my-5">
+        <div class="row no-gutters">  
+            <div class="col-lg-3 col-sm-4 d-flex align-items-center mx-auto">
+                <img src="{{ cart.product_image.url}}" alt="" class="" style="max-width: 200px;max-height: 250px;;">
+            </div>
+            <div class="col-lg-8 col-sm-7 mx-auto">
+                <form action="{% url 'buy' cart.prod.id %}" method="POST">
+                    {% csrf_token %}
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                <h3 class="card-title">{{cart.name}}</h3>
+                <a href="{% url 'removecart' cart.id %}" class="btn btn-danger btn-sm">Remove cart</a>
+                </div>
+                <p class="card-text pt-1">Quantity : {{cart.quantity}}</p>
+                <p class="card-text pt-1">Price : {{cart.selling_price}}</p>
+                <p class="card-text pt-1" style="color: rgb(14, 224, 25);">Over All Price : {{cart.selling_price}} * {{cart.quantity}} = {{cart.overallprice}}</p>
+                <p class="card-text pt-1"><small class="text-muted">{{cart.updated}}</small></p>
+                <div class="clearfix py-2 d-grid">
+                <button name="buyval" value="{{cart.quantity}}" class="btn btn-primary btn-block">Buy Now</button></div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 class="text-danger text-center" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,-50%);">Your Cart is Empty</h3>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="container">
+    <ol class="breadcrumb p-2">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active">buy product</li>
+    </ol> 
+    <h1 class="mt-3">Buy Product</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable d-flex justify-content-between">
+            
+            {{message}}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if buy %}
+    {% for buys in buy %}
+    {% if buys.confirm == 0 %}
+    <div class="card my-3">
+        <div class="row">
+            
+            <div class="col-lg-3 col-sm-4 d-flex align-items-center mx-auto my-2">
+                <img src="{{ buys.product_image.url}}" alt="" class="img-fluid mx-auto d-block my-auto" style="max-width: 200px;max-height: 250px;;">
+            </div>
+            <div class="col-lg-8 col-sm-7 mx-auto">
+                <form action="{% url 'buyu' buys.id %}" method="POST">
+                    {% csrf_token %}
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                <h3 class="card-title">{{buys.name}}</h3>
+                <a href="{% url 'nccancelorder' buys.id %}" name="canord" value="notcon" class="btn btn-danger btn-sm">Remove cart</a>
+                </div>
+                <p class="card-text">Quantity : {{buys.quantity}}</p>
+                <p class="card-text">Price : {{buys.selling_price}}</p>
+                <p class="card-text">Deleivery Charges - <span class="text-muted"><s>Rs.40</s></span> <span style="color: rgb(14, 224, 25);">FREE DELIVEY</span></p>
+                <p class="card-text" >Over All Price : {{buys.selling_price}} * {{buys.quantity}} = <span style="color: rgb(14, 224, 25);">{{buys.overallprice}}</span></p>
+                <p class="card-text"><small class="text-muted">{{buys.updated}}</small></p>
+                <div class="clearfix py-2 d-grid">
+                <button class="btn btn-primary btn-block" value="confirm" name="but">Confirm</button></div></div>
+            </form>
+            </div>
+            </div>
+        </div>
+    {% else %}
+    <div class="card my-3">
+        <div class="row no-gutters">
+            
+            <div class="col-lg-3 col-sm-4 d-flex align-items-center mx-auto my-2">
+                <img src="{{ buys.product_image.url}}" alt="" class="img-fluid mx-auto d-block my-auto" style="max-width: 200px;max-height: 250px;;">
+            </div>
+            <div class="col-lg-8 col-sm-7 mx-auto">
+                <form action="{% url 'buyu' buys.id %}" method="POST">
+                    {% csrf_token %}
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                <h3 class="card-title">{{buys.name}}</h3>
+                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#showterms">Cancel Order</a>
+                
+            </div>
+                <h2 class="pt-5 text-center" style="color: green;">Your Product Will Be Delivey on {{buys.delivery}} </h2></div>
+            </form>
+            <div class="modal fade" id="showterms" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cancel Order</h4>
+                        <button class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Are you sure you want cancel this order! </h4>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                        <a href="{% url 'cancelorder' buys.id %}" type="button" class="btn btn-primary">Yes</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <h3 class="text-danger" style="position: absolute;top: 50%;left: 50%; transform: translate(-50%,-50%);">You Don't have any Order</h3>
+    {% endif %}
+</div>
+{% endblock %}

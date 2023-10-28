@@ -121,8 +121,8 @@ STATIC_URL = 'static/'
 
 MEDIA_URL='uploads/'
 
-STATICFILES_DIRS=[
-    BASE_DIR / 'staic'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
